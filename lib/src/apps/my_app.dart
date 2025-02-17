@@ -15,22 +15,17 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return ChangeNotifierProvider(
-          create: (context) => GameProvider(),
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Game Page',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              textTheme: Theme.of(
-                context,
-              ).textTheme.apply(fontSizeFactor: 1.sp),
-            ),
-            home: const HomePage(),
-            routes: {
-              GamePage.routeName: (context) => const GamePage(),
-            }, // Set HomePage here
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Game Page',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            textTheme: Theme.of(context).textTheme.apply(fontSizeFactor: 1.sp),
           ),
+          home: const HomePage(),
+          routes: {
+            GamePage.routeName: (context) => const GamePage(),
+          }, // Set HomePage here
         );
       },
     );
