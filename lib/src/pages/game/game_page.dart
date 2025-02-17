@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_flutter/src/common/widget/button_custom.dart';
 import 'package:game_flutter/src/providers/game_provider.dart';
 import 'package:provider/provider.dart';
 
 class GamePage extends StatelessWidget {
+  static const routeName = '/game-page';
   const GamePage({super.key});
 
   @override
@@ -116,36 +118,10 @@ class GamePage extends StatelessWidget {
                                           ],
                                         ),
                                         55.verticalSpace,
-                                        Material(
-                                          borderRadius: BorderRadius.circular(
-                                            20.r,
-                                          ),
-                                          clipBehavior: Clip.hardEdge,
-                                          child: InkWell(
-                                            splashColor: Colors.yellowAccent,
-                                            onTap: () {},
-                                            child: Ink(
-                                              width: 214.dg,
-                                              height: 69.dg,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20.r),
-                                                color: const Color(0xff1fc5ea),
-                                              ),
-
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/icons/2.png",
-                                                  ),
-                                                  15.horizontalSpace,
-                                                  Text("Try Again"),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                        ButtonCustom(
+                                          title: 'Try Again',
+                                          isEnable: true,
+                                          icon: "assets/icons/2.png",
                                         ),
                                       ],
                                     ),
