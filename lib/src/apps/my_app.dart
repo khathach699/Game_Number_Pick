@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_flutter/src/pages/game/game_page.dart';
+import 'package:game_flutter/src/providers/game_provider.dart';
+import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(414, 896),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, _) {
+      builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Game Page',
@@ -19,9 +21,13 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             textTheme: Theme.of(context).textTheme.apply(fontSizeFactor: 1.sp),
           ),
-          home: const GamePage(),
+          home: child,
         );
       },
+      child: ChangeNotifierProvider(
+        create: (context) => GameProvider(),
+        child: const GamePage(),
+      ),
     );
   }
 }
