@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_flutter/src/common/widget/button_custom.dart';
+import 'package:provider/provider.dart';
+
+import 'history_provider.dart';
 
 class GameProvider extends ChangeNotifier {
   int total = 50;
@@ -14,7 +17,7 @@ class GameProvider extends ChangeNotifier {
   int initNumber = 0;
   List<int> dataNumber = [];
   int core = 0;
-  List dataCore = [];
+
 
 
   void start(context) {
@@ -51,9 +54,13 @@ class GameProvider extends ChangeNotifier {
   }
   void saveGame(context) {
     if(nameController.text.isEmpty) return;
-    Map nameScore = { "name": nameController.text, "score": core };
-    dataCore.add(nameScore);
-
+    final newScore = {
+      "name": nameController.text,
+      "score": core,
+      "time":  60  - count
+    };
+    print("Saving score: $newScore");
+    Provider.of<HistoryProvider>(context, listen: false).addScore(newScore);
     Navigator.pop(context);
     Navigator.pop(context);
 

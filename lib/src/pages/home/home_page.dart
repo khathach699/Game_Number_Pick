@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_flutter/src/common/widget/button_custom.dart';
 import 'package:game_flutter/src/pages/game/game_page.dart';
 
+import 'high_core_page.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -28,7 +30,9 @@ class HomePage extends StatelessWidget {
             30.verticalSpace,
             ButtonCustom(title: 'Level'),
             30.verticalSpace,
-            ButtonCustom(title: 'Score'),
+            ButtonCustom(title: 'Score', onPressed: () {
+              Navigator.pushNamed(context, HighScorePage.routeName);
+            }),
             30.verticalSpace,
             ButtonCustom(title: 'Setting'),
           ],
