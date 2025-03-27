@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_flutter/src/pages/game/game_page.dart';
 import 'package:game_flutter/src/pages/home/home_page.dart';
-import 'package:game_flutter/src/providers/game_provider.dart';
-import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:game_flutter/src/common/widget/button_custom.dart';
 import 'package:game_flutter/src/providers/game_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +10,7 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => GameProvider()..start(),
+      create: (context) => GameProvider()..start(context),
       child: Consumer<GameProvider>(
         builder: (context, gameProvider, child) {
           final listDate = gameProvider.listNumber;
@@ -91,7 +90,7 @@ class GamePage extends StatelessWidget {
                               onTap:
                                   () => context
                                       .read<GameProvider>()
-                                      .handleClick(listDate[index]),
+                                      .handleClick(listDate[index], context),
                               child: Consumer<GameProvider>(
                                 builder: (_, data, __) {
                                   return Ink(
