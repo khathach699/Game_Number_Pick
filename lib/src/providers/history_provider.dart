@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryProvider extends ChangeNotifier {
   List<Map<String, dynamic>> _scores = [];
@@ -16,7 +19,7 @@ class HistoryProvider extends ChangeNotifier {
     final String? scoresString = prefs.getString('scores');
     if (scoresString != null) {
       _scores = List<Map<String, dynamic>>.from(json.decode(scoresString));
-      _scores.sort((a,b) => b["score"].compareTo(a["score"]));
+      _scores.sort((a, b) => b['score'].compareTo(a['score']));
       notifyListeners();
     }
   }

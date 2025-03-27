@@ -1,69 +1,83 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_flutter/src/common/widget/button_custom.dart';
+import 'package:game_flutter/src/providers/history_provider.dart';
+import 'package:game_flutter/src/providers/level_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'history_provider.dart';
-
 class GameProvider extends ChangeNotifier {
-  int total = 50;
+  late int total;
+  late int count;
+  late int initialTimeLimit;
   late List<int> listNumber;
   StreamController<int> streamController = StreamController<int>();
   late TextEditingController nameController;
   Timer? timer;
-  int count = 60;
   int initNumber = 0;
   List<int> dataNumber = [];
   int core = 0;
 
+  void start(BuildContext context) {
+    final levelProvider = Provider.of<LevelProvider>(context, listen: false);
+    total = levelProvider.totalNumbers;
+    count = levelProvider.timeLimit;
+    initialTimeLimit = levelProvider.timeLimit;
 
-
-  void start(context) {
     nameController = TextEditingController();
     listNumber = List.generate(total, (index) => index + 1)..shuffle();
     runTimer(context);
   }
-  void endGame(context) {
-    timer!.cancel();
+
+  void endGame(BuildContext context) {
+    timer?.cancel();
     ShowMessageError(context);
   }
 
-  void handleClick(int number, context) {
+  void winGame(BuildContext context) {
+    timer?.cancel();
+    ShowMessageWin(context);
+  }
+
+  void handleClick(int number, BuildContext context) {
     initNumber++;
     if (number == initNumber) {
       dataNumber.add(number);
       core += 10;
+
+      if (dataNumber.length == total) {
+        winGame(context); // Gọi thông báo chiến thắng
+      }
     } else {
-      endGame(context);
+      endGame(context); // Gọi thông báo thua nếu nhập sai
     }
     notifyListeners();
   }
 
-  void runTimer(context) {
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+  void runTimer(BuildContext context) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (count > 0) {
         count--;
         streamController.add(count);
       } else {
-        ShowMessageError(context);
+        endGame(context);
         timer?.cancel();
       }
     });
   }
-  void saveGame(context) {
-    if(nameController.text.isEmpty) return;
+
+  void saveGame(BuildContext context) {
+    if (nameController.text.isEmpty) return;
+
     final newScore = {
       "name": nameController.text,
       "score": core,
-      "time":  60  - count
+      "time": initialTimeLimit - count,
     };
     print("Saving score: $newScore");
     Provider.of<HistoryProvider>(context, listen: false).addScore(newScore);
     Navigator.pop(context);
     Navigator.pop(context);
-
   }
 
   Future<dynamic> ShowMessageError(BuildContext context) {
@@ -84,9 +98,8 @@ class GameProvider extends ChangeNotifier {
                   color: Colors.white,
                 ),
                 width: 365.dg,
-
                 child: Column(
-                  mainAxisSize: MainAxisSize.min ,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       "Sorry, you failed",
@@ -118,20 +131,26 @@ class GameProvider extends ChangeNotifier {
                       ],
                     ),
                     20.verticalSpace,
-                    Row(children: [
-                      Text("Nhập Tên: ",
-                        style: TextStyle(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.bold,
-                        ),),
-                      Expanded(child: TextFormField(
-                        controller: nameController,
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        Text(
+                          "Nhập Tên: ",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      )),
-                    ],),
+                        Expanded(
+                          child: TextFormField(
+                            controller: nameController,
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     20.verticalSpace,
                     ButtonCustom(
                       onPressed: () {
@@ -161,9 +180,109 @@ class GameProvider extends ChangeNotifier {
     );
   }
 
+  Future<dynamic> ShowMessageWin(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.dg),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 22.dg, horizontal: 58.dg),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40.r),
+                  color: Colors.white,
+                ),
+                width: 365.dg,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Congratulations, you won!",
+                      style: TextStyle(
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
+                    ),
+                    20.verticalSpace,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Your score:",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        10.horizontalSpace,
+                        Text(
+                          core.toString(),
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                    20.verticalSpace,
+                    Row(
+                      children: [
+                        Text(
+                          "Nhập Tên: ",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            controller: nameController,
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    20.verticalSpace,
+                    ButtonCustom(
+                      onPressed: () {
+                        saveGame(context);
+                      },
+                      title: 'Save',
+                      isEnable: true,
+                      icon: "assets/icons/2.png",
+                    ),
+                    26.verticalSpace,
+                    ButtonCustom(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      title: 'Play Again',
+                      isEnable: true,
+                      icon: "assets/icons/2.png",
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     streamController.close();
   }
