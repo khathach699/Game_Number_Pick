@@ -1,16 +1,19 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:game_flutter/src/pages/game/game_page.dart';
 import 'package:game_flutter/src/pages/home/home_page.dart';
+import 'package:game_flutter/src/pages/home/game_mode_page.dart';
+
+import 'package:game_flutter/src/pages/home/setting_page.dart';
+import 'package:game_flutter/src/pages/game/level_page.dart';
 import 'package:game_flutter/src/providers/game_provider.dart';
 import 'package:game_flutter/src/providers/history_provider.dart';
 import 'package:game_flutter/src/providers/level_provider.dart';
 import 'package:game_flutter/src/providers/audio_provider.dart';
-import 'package:provider/provider.dart';
 
-import '../pages/game/level_page.dart';
 import '../pages/home/high_core_page.dart';
-import '../pages/home/setting_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,19 +37,16 @@ class MyApp extends StatelessWidget {
       child: ScreenUtilInit(
         designSize: const Size(414, 896),
         minTextAdapt: true,
-        splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
-            title: 'Game Page',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              textTheme: Theme.of(context).textTheme.apply(fontSizeFactor: 1.sp),
-            ),
+            title: 'Game Hub',
+            theme: ThemeData(primarySwatch: Colors.blue),
             home: const HomePage(),
             routes: {
               GamePage.routeName: (context) => const GamePage(),
+              GameModePage.routeName: (context) => const GameModePage(),
               HighScorePage.routeName: (context) => const HighScorePage(),
               LevelPage.routeName: (context) => const LevelPage(),
               SettingPage.routeName: (context) => const SettingPage(),

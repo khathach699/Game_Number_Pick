@@ -1,14 +1,13 @@
-import 'package:audioplayers/audioplayers.dart';
+// lib/pages/home/home_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:game_flutter/src/common/widget/button_custom.dart';
-import 'package:game_flutter/src/pages/game/game_page.dart';
-import 'package:game_flutter/src/pages/home/setting_page.dart';
 import 'package:provider/provider.dart';
+import 'package:game_flutter/src/providers/audio_provider.dart';
+import 'game_mode_page.dart';
 
-import '../../providers/audio_provider.dart';
-import '../game/level_page.dart';
 import 'high_core_page.dart';
+import 'setting_page.dart';
+import '../game/level_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,37 +19,29 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Home Page",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text("Game Hub", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold)),
+            50.verticalSpace,
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, GameModePage.routeName),
+              child: Text("Start Game", style: TextStyle(fontSize: 20.sp)),
             ),
-            123.verticalSpace,
-            ButtonCustom(
-              title: 'Start Game',
+            20.verticalSpace,
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, LevelPage.routeName),
+              child: Text("Levels", style: TextStyle(fontSize: 20.sp)),
+            ),
+            20.verticalSpace,
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, HighScorePage.routeName),
+              child: Text("High Scores", style: TextStyle(fontSize: 20.sp)),
+            ),
+            20.verticalSpace,
+            ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, GamePage.routeName);
+                Provider.of<AudioProvider>(context, listen: false).playButtonClickSound();
+                Navigator.pushNamed(context, SettingPage.routeName);
               },
-            ),
-            30.verticalSpace,
-            ButtonCustom(
-              title: 'Level',
-              onPressed: () {
-                Navigator.pushNamed(context, LevelPage.routeName);
-              },
-            ),
-            30.verticalSpace,
-            ButtonCustom(
-              title: 'Score',
-              onPressed: () {
-                Navigator.pushNamed(context, HighScorePage.routeName);
-              },
-            ),
-            30.verticalSpace,
-            ButtonCustom(title: 'Setting',
-            onPressed: () {
-              Provider.of<AudioProvider>(context, listen: false).playButtonClickSound();
-              Navigator.pushNamed(context, SettingPage.routeName);
-            },
+              child: Text("Settings", style: TextStyle(fontSize: 20.sp)),
             ),
           ],
         ),
