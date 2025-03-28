@@ -5,6 +5,8 @@ import 'package:game_flutter/src/pages/game/game_page.dart';
 import 'package:game_flutter/src/providers/level_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/audio_provider.dart';
+
 class LevelPage extends StatelessWidget {
   static const routeName = '/level-page';
   const LevelPage({super.key});
@@ -33,6 +35,7 @@ class LevelPage extends StatelessWidget {
                     child: ButtonCustom(
                       title: 'Level $level',
                       onPressed: () {
+                        Provider.of<AudioProvider>(context, listen: false).playButtonClickSound();
                         levelProvider.setLevel(level);
                         Navigator.pushNamed(context, GamePage.routeName);
                       },

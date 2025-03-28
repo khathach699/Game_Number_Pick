@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class HistoryProvider extends ChangeNotifier {
   List<Map<String, dynamic>> _scores = [];

@@ -1,8 +1,12 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_flutter/src/common/widget/button_custom.dart';
 import 'package:game_flutter/src/pages/game/game_page.dart';
+import 'package:game_flutter/src/pages/home/setting_page.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/audio_provider.dart';
 import '../game/level_page.dart';
 import 'high_core_page.dart';
 
@@ -42,7 +46,12 @@ class HomePage extends StatelessWidget {
               },
             ),
             30.verticalSpace,
-            ButtonCustom(title: 'Setting'),
+            ButtonCustom(title: 'Setting',
+            onPressed: () {
+              Provider.of<AudioProvider>(context, listen: false).playButtonClickSound();
+              Navigator.pushNamed(context, SettingPage.routeName);
+            },
+            ),
           ],
         ),
       ),
