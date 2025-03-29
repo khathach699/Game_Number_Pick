@@ -1,6 +1,7 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_flutter/src/pages/home/wrapper_page.dart';
 import 'package:provider/provider.dart';
 import 'package:game_flutter/src/pages/game/game_page.dart';
 import 'package:game_flutter/src/pages/home/home_page.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Game Hub',
             theme: ThemeData(primarySwatch: Colors.blue),
-            home: const HomePage(),
+            home: const WrapperPage(),
             routes: {
               GamePage.routeName: (context) => const GamePage(),
               GameModePage.routeName: (context) => const GameModePage(),
