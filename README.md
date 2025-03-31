@@ -19,7 +19,7 @@
 - **Framework**: Flutter
 - **State Management**: Profiver
 - **UI**: Material Design, flutter_screenutil
-- **Library**:firebase_core, firebase_auth,shared_preferences,audioplayers
+- **Library**: Firebase_core, Firebase_auth, Shared_preferences, Audioplayers
 
 ## 📂 Cấu trúc thư mục
 ![image copy 11.png](assets/backgrounds/image%20copy%2011.png)
