@@ -19,6 +19,8 @@ class ColorMatchGameProvider with ChangeNotifier {
   int core = 0;
   List<Color> targetColors = [];
   List<Color> playerColors = [];
+  int mistakes = 0;
+  final int maxMistakes = 3;
   bool _isInitialized = false;
 
   bool get isInitialized => _isInitialized;
@@ -38,6 +40,7 @@ class ColorMatchGameProvider with ChangeNotifier {
     listNumber = List.generate(total, (_) => _randomColor())..shuffle();
     targetColors = List.generate(3, (_) => _randomColor());
     playerColors.clear();
+    mistakes = 0;
     runTimer(context);
     _isInitialized = true;
     notifyListeners();
@@ -51,6 +54,7 @@ class ColorMatchGameProvider with ChangeNotifier {
     core = 0;
     targetColors.clear();
     playerColors.clear();
+    mistakes = 0;
     notifyListeners();
     if (context != null) start(context);
   }
@@ -70,12 +74,20 @@ class ColorMatchGameProvider with ChangeNotifier {
     playerColors.add(item);
     if (playerColors.length <= targetColors.length) {
       if (playerColors.last != targetColors[playerColors.length - 1]) {
-        endGame(context);
+        mistakes++;
+        playerColors.removeLast();
+        if (mistakes >= maxMistakes) {
+          endGame(context);
+        }
       } else if (playerColors.length == targetColors.length) {
         core += 30;
-        playerColors.clear();
-        targetColors = List.generate(3, (_) => _randomColor());
-        listNumber = List.generate(total, (_) => _randomColor())..shuffle();
+        if (core >= 90) {
+          winGame(context);
+        } else {
+          playerColors.clear();
+          targetColors = List.generate(3, (_) => _randomColor());
+          listNumber = List.generate(total, (_) => _randomColor())..shuffle();
+        }
       }
     }
     notifyListeners();
@@ -88,6 +100,9 @@ class ColorMatchGameProvider with ChangeNotifier {
       Colors.green,
       Colors.yellow,
       Colors.purple,
+      Colors.orange,
+      Colors.pink,
+      Colors.cyan,
     ];
     return colors[Random().nextInt(colors.length)];
   }

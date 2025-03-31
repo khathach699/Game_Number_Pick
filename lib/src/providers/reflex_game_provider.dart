@@ -1,4 +1,3 @@
-// lib/providers/reflex_game_provider.dart
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -35,7 +34,7 @@ class ReflexGameProvider with ChangeNotifier {
     count = levelProvider.timeLimit;
     initialTimeLimit = levelProvider.timeLimit;
     listNumber = List.filled(total, 0);
-    activateRandomTile();
+    activateRandomTile(context); // Truyền context để gọi endGame
     runTimer(context);
     _isInitialized = true;
     notifyListeners();
@@ -66,26 +65,27 @@ class ReflexGameProvider with ChangeNotifier {
   void handleClick(int index, BuildContext context) {
     if (index == activeIndex) {
       core += 15;
-      activateRandomTile();
+      activateRandomTile(context);
     } else {
       endGame(context);
     }
     notifyListeners();
   }
 
-  void activateRandomTile() {
+  void activateRandomTile(BuildContext context) {
     activeIndex = Random().nextInt(total);
     notifyListeners();
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 1), () {
       if (activeIndex != null) {
-        activeIndex = null;
-        notifyListeners();
+        endGame(context); // Kết thúc game nếu không nhấn kịp trong 2 giây
       }
     });
   }
 
   void endGame(BuildContext context) {
     timer?.cancel();
+    activeIndex = null; // Đảm bảo ô tắt khi game kết thúc
+    notifyListeners();
     showDialog(
       context: context,
       barrierDismissible: false,

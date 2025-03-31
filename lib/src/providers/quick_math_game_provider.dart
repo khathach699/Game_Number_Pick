@@ -1,4 +1,3 @@
-// lib/providers/quick_math_game_provider.dart
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ class QuickMathGameProvider with ChangeNotifier {
   late int count;
   late int initialTimeLimit;
   late List<int> listNumber;
+  late List<Color> tileColors; // Danh sách màu cho các ô
   late StreamController<int> streamController;
   late TextEditingController nameController;
   Timer? timer;
@@ -37,6 +37,10 @@ class QuickMathGameProvider with ChangeNotifier {
     initialTimeLimit = levelProvider.timeLimit;
     _generateMathQuestion();
     listNumber = _generateMathOptions();
+    tileColors = List.generate(
+      total,
+      (_) => _randomColor(),
+    ); // Tạo màu ngẫu nhiên
     runTimer(context);
     _isInitialized = true;
     notifyListeners();
@@ -49,6 +53,7 @@ class QuickMathGameProvider with ChangeNotifier {
     streamController = StreamController<int>.broadcast();
     core = 0;
     mathQuestion = "";
+    tileColors.clear();
     notifyListeners();
     if (context != null) start(context);
   }
@@ -69,6 +74,10 @@ class QuickMathGameProvider with ChangeNotifier {
       core += 20;
       _generateMathQuestion();
       listNumber = _generateMathOptions();
+      tileColors = List.generate(
+        total,
+        (_) => _randomColor(),
+      ); // Cập nhật màu mới
     } else {
       endGame(context);
     }
@@ -76,33 +85,68 @@ class QuickMathGameProvider with ChangeNotifier {
   }
 
   void _generateMathQuestion() {
-    int a = Random().nextInt(20);
-    int b = Random().nextInt(20);
-    int op = Random().nextInt(3);
+    int a = Random().nextInt(20) + 1; // +1 để tránh chia cho 0
+    int b = Random().nextInt(20) + 1;
+    int op =
+        _weightedRandomOperation(); // Sử dụng hàm chọn phép toán có trọng số
     switch (op) {
-      case 0:
+      case 0: // Cộng
         mathQuestion = "$a + $b = ?";
         correctAnswer = a + b;
         break;
-      case 1:
+      case 1: // Trừ
         mathQuestion = "$a - $b = ?";
         correctAnswer = a - b;
         break;
-      case 2:
+      case 2: // Nhân
         mathQuestion = "$a * $b = ?";
         correctAnswer = a * b;
+        break;
+      case 3: // Chia
+        mathQuestion = "${a * b} / $b = ?"; // Đảm bảo kết quả là số nguyên
+        correctAnswer = (a * b) ~/ b;
         break;
     }
   }
 
+  int _weightedRandomOperation() {
+    // Tăng xác suất phép nhân (40%), phép chia (20%), cộng và trừ (mỗi cái 20%)
+    int random = Random().nextInt(100);
+    if (random < 20) return 0; // Cộng: 20%
+    if (random < 40) return 1; // Trừ: 20%
+    if (random < 80) return 2; // Nhân: 40%
+    return 3; // Chia: 20%
+  }
+
   List<int> _generateMathOptions() {
     List<int> options = [correctAnswer];
-    while (options.length < total) {
-      int wrong = correctAnswer + Random().nextInt(10) - 5;
-      if (!options.contains(wrong) && wrong != correctAnswer)
+    int attempts = 0;
+    while (options.length < total && attempts < 100) {
+      int wrong = correctAnswer + Random().nextInt(20) - 10;
+      if (!options.contains(wrong)) {
         options.add(wrong);
+      }
+      attempts++;
+    }
+    while (options.length < total) {
+      int filler = Random().nextInt(100);
+      if (!options.contains(filler)) options.add(filler);
     }
     return options..shuffle();
+  }
+
+  Color _randomColor() {
+    final colors = [
+      Colors.red,
+      Colors.blue,
+      Colors.green,
+      Colors.yellow,
+      Colors.purple,
+      Colors.orange,
+      Colors.cyan,
+      Colors.grey,
+    ];
+    return colors[Random().nextInt(colors.length)];
   }
 
   void endGame(BuildContext context) {

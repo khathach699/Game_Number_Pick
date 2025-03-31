@@ -1,9 +1,7 @@
-// lib/pages/game/widgets/quick_math_game_widget.dart
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:game_flutter/src/providers/game_provider.dart';
 import 'package:game_flutter/src/providers/quick_math_game_provider.dart';
 import 'package:game_flutter/src/providers/audio_provider.dart';
 
@@ -80,14 +78,14 @@ class QuickMathGameWidget extends StatelessWidget {
                   context,
                   listen: false,
                 ).playButtonClickSound();
-                Provider.of<GameProvider>(
+                Provider.of<QuickMathGameProvider>(
                   context,
                   listen: false,
-                ).handleClick(listData[index], index, context);
+                ).handleClick(listData[index], context);
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.purple,
+                  color: provider.tileColors[index], // Sử dụng màu ngẫu nhiên
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Center(
@@ -96,6 +94,7 @@ class QuickMathGameWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
+                      color: Colors.black, // Đảm bảo chữ trắng để dễ đọc
                     ),
                   ),
                 ),

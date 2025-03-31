@@ -1,5 +1,6 @@
 // lib/providers/countdown_game_provider.dart
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:game_flutter/src/common/widget/game_over_dialog.dart';
 import 'package:game_flutter/src/common/widget/game_win_dialog.dart';
@@ -12,6 +13,7 @@ class CountdownGameProvider with ChangeNotifier {
   late int count;
   late int initialTimeLimit;
   late List<int> listNumber;
+  late List<Color> listColor;
   late StreamController<int> streamController;
   late TextEditingController nameController;
   Timer? timer;
@@ -27,6 +29,20 @@ class CountdownGameProvider with ChangeNotifier {
     streamController = StreamController<int>.broadcast();
     nameController = TextEditingController();
   }
+  List<Color> colors = [
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.yellow,
+    Colors.orange,
+    Colors.purple,
+    Colors.pink,
+    Colors.cyan,
+    Colors.teal,
+    Colors.indigo,
+    Colors.brown,
+    Colors.grey,
+  ];
 
   void start(BuildContext context) {
     if (_isInitialized) return;
@@ -34,6 +50,10 @@ class CountdownGameProvider with ChangeNotifier {
     total = levelProvider.totalNumbers;
     count = levelProvider.timeLimit;
     initialTimeLimit = levelProvider.timeLimit;
+    listColor = List.generate(
+      total,
+      (_) => colors[Random().nextInt(colors.length)],
+    );
     listNumber = List.generate(total, (index) => index + 1)..shuffle();
     initNumber = total;
     runTimer(context);

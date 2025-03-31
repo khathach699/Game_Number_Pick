@@ -85,7 +85,7 @@ class CountdownGameWidget extends StatelessWidget {
                   color:
                       provider.dataNumber.contains(listData[index])
                           ? Colors.white
-                          : Colors.red,
+                          : provider.listColor[index],
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Center(
