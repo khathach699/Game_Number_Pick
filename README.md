@@ -1,17 +1,54 @@
-# game_flutter
+# Game NumberNumber
 
-A new Flutter project.
+## 📌 Giới thiệu
 
-## Getting Started
+**Game Number** là một ứng dụng giải chí về các con số
 
-This project is a starting point for a Flutter application.
+### 🚀 Game chính
 
-A few resources to get you started if this is your first Flutter project:
+## Sequece-game
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## reflex-game
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# flutter_game
+## Coundown-game
+
+## quike-match-gamegame
+
+### 🏗️ Công nghệ sử dụng
+
+- **Framework**: Flutter
+- **State Management**: Profiver
+- **UI**: Material Design, flutter_screenutil
+- **Library**:firebase_core, firebase_auth,shared_preferences,audioplayers
+
+## 📂 Cấu trúc thư mục
+![image copy 11.png](assets/backgrounds/image%20copy%2011.png)
+### **Flutter**
+## 🖼️ Hình ảnh minh họa
+
+### **Giao diện chính**
+
+| Đăng nhập                              | Đăng ký                                 | Trang chủ                           |
+| -------------------------------------- | --------------------------------------- | ----------------------------------- |
+| ![image.png](assets/backgrounds/image.png)| ![image copy.png](assets/backgrounds/image%20copy.png) |![image copy 2.png](assets/backgrounds/image%20copy%202.png)  |
+
+### **Chức năng chính**
+
+| Cài đặt                                         | Thành tích                                             | Lựa chọn chế độ                     |
+|-------------------------------------------------|--------------------------------------------------------|-------------------------------------|
+| ![image copy 3.png](assets/backgrounds/image%20copy%203.png) | ![image copy 4.png](assets/backgrounds/image%20copy%204.png) | ![image copy 5.png](assets/backgrounds/image%20copy%205.png)|
+
+|         Sequece-game                           | Coundown-game                                            | Reflex-game                               |
+| --------------------------------------------------- |----------------------------------------------------------|-------------------------------------------|
+| ![image copy 6.png](assets/backgrounds/image%20copy%206.png) |![image copy 9.png](assets/backgrounds/image%20copy%209.png) | ![image copy 7.png](assets/backgrounds/image%20copy%207.png)|
+
+| Quike-Match                                                  | Win-game                                                    | Lost-game                                                    |
+|--------------------------------------------------------------|-------------------------------------------------------------|--------------------------------------------------------------|
+| ![image copy 8.png](assets/backgrounds/image%20copy%208.png)| ![img.png](assets/backgrounds/img.png)| ![image copy 10.png](assets/backgrounds/image%20copy%2010.png) |
+
+
+
+## 💡 Góp ý & Liên hệ
+
+- 📧 Liên hệ:Tôi luôn hoan nghênh mọi đóng góp để cải thiện dự án!
+- 📱 Liên hệ:Nếu bạn có bất kỳ góp ý vui lòng liện hê qua email: khathach699@gmail.com

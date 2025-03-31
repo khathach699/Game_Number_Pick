@@ -7,7 +7,7 @@ import 'package:game_flutter/src/providers/matching_game_provider.dart';
 import 'package:game_flutter/src/providers/quick_math_game_provider.dart';
 import 'package:game_flutter/src/providers/reflex_game_provider.dart';
 import 'package:game_flutter/src/providers/sequence_game_provider.dart';
-import 'package:game_flutter/src/providers/simon_says_game_provider.dart';
+import 'package:game_flutter/src/providers/programming_quiz_game_Provider.dart';
 import 'package:game_flutter/src/providers/tile_swap_game_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:game_flutter/src/providers/game_provider.dart';
@@ -19,7 +19,7 @@ import 'package:game_flutter/src/pages/game/widgets/countdown_game_widget.dart';
 import 'package:game_flutter/src/pages/game/widgets/color_match_game_widget.dart';
 import 'package:game_flutter/src/pages/game/widgets/tile_swap_game_widget.dart';
 import 'package:game_flutter/src/pages/game/widgets/quick_math_game_widget.dart';
-import 'package:game_flutter/src/pages/game/widgets/simon_says_game_widget.dart';
+import 'package:game_flutter/src/pages/game/widgets/programming_quiz_game_widget.dart';
 import '../../apps/my_app.dart';
 
 class GamePage extends StatelessWidget with RouteAware {
@@ -138,7 +138,7 @@ class GamePage extends StatelessWidget with RouteAware {
         }
         break;
       case GameMode.simonSays:
-        if (!Provider.of<SimonSaysGameProvider>(
+        if (!Provider.of<ProgrammingQuizGameProvider>(
           context,
           listen: false,
         ).isInitialized) {
@@ -165,7 +165,7 @@ class GamePage extends StatelessWidget with RouteAware {
       case GameMode.quickMath:
         return QuickMathGameWidget();
       case GameMode.simonSays:
-        return SimonSaysGameWidget();
+        return ProgrammingQuizGameWidget();
     }
   }
 }

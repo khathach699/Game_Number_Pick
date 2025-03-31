@@ -59,16 +59,36 @@ class GameModePage extends StatelessWidget {
                         20.verticalSpace,
                         buildModeButton(context, "Reflex", GameMode.reflex),
                         20.verticalSpace,
-                        buildModeButton(context, "Countdown", GameMode.countdown),
+                        buildModeButton(
+                          context,
+                          "Countdown",
+                          GameMode.countdown,
+                        ),
                         20.verticalSpace,
-                        buildModeButton(context, "Color Match", GameMode.colorMatch),
+                        // buildModeButton(
+                        //   context,
+                        //   "Color Match",
+                        //   GameMode.colorMatch,
+                        // ),
+                        // 20.verticalSpace,
+                        // buildModeButton(
+                        //   context,
+                        //   "Tile Swap",
+                        //   GameMode.tileSwap,
+                        // ),
+                        // 20.verticalSpace,
+                        buildModeButton(
+                          context,
+                          "Quick Math",
+                          GameMode.quickMath,
+                        ),
                         20.verticalSpace,
-                        buildModeButton(context, "Tile Swap", GameMode.tileSwap),
-                        20.verticalSpace,
-                        buildModeButton(context, "Quick Math", GameMode.quickMath),
-                        20.verticalSpace,
-                        buildModeButton(context, "Simon Says", GameMode.simonSays),
-                        20.verticalSpace,
+                        // buildModeButton(
+                        //   context,
+                        //   "Programming Quiz",
+                        //   GameMode.simonSays,
+                        // ),
+                        // 20.verticalSpace,
                       ],
                     ),
                   ),
@@ -100,10 +120,7 @@ class GameModePage extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: TextStyle(
-          fontSize: 20.sp,
-          fontWeight: FontWeight.bold,
-        ),
+        style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
       ),
     );
   }

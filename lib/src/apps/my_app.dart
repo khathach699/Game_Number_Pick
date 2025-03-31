@@ -8,7 +8,7 @@ import 'package:game_flutter/src/providers/matching_game_provider.dart';
 import 'package:game_flutter/src/providers/quick_math_game_provider.dart';
 import 'package:game_flutter/src/providers/reflex_game_provider.dart';
 import 'package:game_flutter/src/providers/sequence_game_provider.dart';
-import 'package:game_flutter/src/providers/simon_says_game_provider.dart';
+import 'package:game_flutter/src/providers/programming_quiz_game_Provider.dart';
 import 'package:game_flutter/src/providers/tile_swap_game_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:game_flutter/src/pages/home/wrapper_page.dart';
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ColorMatchGameProvider()),
         ChangeNotifierProvider(create: (_) => TileSwapGameProvider()),
         ChangeNotifierProvider(create: (_) => QuickMathGameProvider()),
-        ChangeNotifierProvider(create: (_) => SimonSaysGameProvider()),
+        ChangeNotifierProvider(create: (_) => ProgrammingQuizGameProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(414, 896),

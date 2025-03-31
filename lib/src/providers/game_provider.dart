@@ -8,7 +8,7 @@ import 'countdown_game_provider.dart';
 import 'color_match_game_provider.dart';
 import 'tile_swap_game_provider.dart';
 import 'quick_math_game_provider.dart';
-import 'simon_says_game_provider.dart';
+import 'programming_quiz_game_Provider.dart';
 
 enum GameMode {
   sequence,
@@ -72,7 +72,7 @@ class GameProvider with ChangeNotifier {
         ).start(context);
         break;
       case GameMode.simonSays:
-        Provider.of<SimonSaysGameProvider>(
+        Provider.of<ProgrammingQuizGameProvider>(
           context,
           listen: false,
         ).start(context);
@@ -122,7 +122,7 @@ class GameProvider with ChangeNotifier {
         ).reset(context);
         break;
       case GameMode.simonSays:
-        Provider.of<SimonSaysGameProvider>(
+        Provider.of<ProgrammingQuizGameProvider>(
           context,
           listen: false,
         ).reset(context);
@@ -175,7 +175,7 @@ class GameProvider with ChangeNotifier {
         ).handleClick(item, context);
         break;
       case GameMode.simonSays:
-        Provider.of<SimonSaysGameProvider>(
+        Provider.of<ProgrammingQuizGameProvider>(
           context,
           listen: false,
         ).handleClick(index, context);
