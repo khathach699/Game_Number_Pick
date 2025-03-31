@@ -1,36 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_flutter/src/pages/auth/signup_page.dart';
+import 'package:game_flutter/src/pages/auth/widget/cus_tom_button.dart';
 import 'package:provider/provider.dart';
 import 'package:game_flutter/src/providers/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
+  static const String routeName = '/login';
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  bool _isLoading = false;
-
-  Future<void> signIn() async {
-    setState(() => _isLoading = true);
-    try {
-      await Provider.of<AuthProvider>(context, listen: false)
-          .signIn(email.text.trim(), password.text.trim());
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed: ${e.toString()}')),
-      );
-    } finally {
-      setState(() => _isLoading = false);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final email = TextEditingController();
+    final password = TextEditingController();
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -46,11 +35,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.gamepad_outlined,
-                  size: 80.sp,
-                  color: Colors.white,
-                ),
+                Icon(Icons.gamepad_outlined, size: 80.sp, color: Colors.white),
                 20.verticalSpace,
                 Text(
                   'Welcome to Game Hub',
@@ -94,26 +79,22 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 30.verticalSpace,
-                ElevatedButton(
-                  onPressed: _isLoading ? null : signIn,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.blue.shade900,
-                    minimumSize: Size(double.infinity, 50.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    elevation: 5,
-                  ),
-                  child: _isLoading
-                      ? CircularProgressIndicator(color: Colors.blue.shade900)
-                      : Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                CustomButton(
+                  onPressed:
+                      authProvider.isLoading
+                          ? null
+                          : () => authProvider.signIn(
+                            email.text.trim(),
+                            password.text.trim(),
+                          ),
+
+                  text: authProvider.isLoading ? "Loading..." : "Login",
+                ),
+                20.verticalSpace,
+                CustomButton(
+                  onPressed:
+                      () => Navigator.pushNamed(context, SignupPage.routeName),
+                  text: "SignUp",
                 ),
               ],
             ),

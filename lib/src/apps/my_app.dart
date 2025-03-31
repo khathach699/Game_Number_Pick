@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_flutter/src/pages/auth/login_page.dart';
+import 'package:game_flutter/src/pages/auth/signup_page.dart';
 import 'package:provider/provider.dart';
 import 'package:game_flutter/src/pages/home/wrapper_page.dart';
 import 'package:game_flutter/src/pages/game/game_page.dart';
@@ -20,8 +22,10 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final RouteObserver<PageRoute> routeObserver =
+      RouteObserver<PageRoute>();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LevelProvider()),
         ChangeNotifierProvider(create: (_) => GameProvider()),
         ChangeNotifierProvider(create: (_) => AudioProvider()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()), // Thêm AuthProvider
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(414, 896),
@@ -49,6 +53,8 @@ class MyApp extends StatelessWidget {
               HighScorePage.routeName: (context) => const HighScorePage(),
               LevelPage.routeName: (context) => const LevelPage(),
               SettingPage.routeName: (context) => const SettingPage(),
+              SignupPage.routeName: (context) => const SignupPage(),
+              LoginPage.routeName: (context) => const LoginPage(),
             },
             navigatorObservers: [routeObserver],
           );
