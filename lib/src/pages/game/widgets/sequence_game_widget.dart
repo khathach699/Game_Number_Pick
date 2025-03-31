@@ -85,7 +85,7 @@ class SequenceGameWidget extends StatelessWidget {
                   color:
                       provider.dataNumber.contains(listData[index])
                           ? Colors.white
-                          : Colors.blue,
+                          : provider.colorList[index],
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Center(

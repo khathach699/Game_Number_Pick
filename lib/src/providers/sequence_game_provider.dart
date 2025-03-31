@@ -1,5 +1,6 @@
 // lib/providers/sequence_game_provider.dart
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:game_flutter/src/common/widget/game_over_dialog.dart';
 import 'package:game_flutter/src/common/widget/game_win_dialog.dart';
@@ -12,8 +13,11 @@ class SequenceGameProvider with ChangeNotifier {
   late int count;
   late int initialTimeLimit;
   late List<int> listNumber;
+  late List<Color> colorList;
   late StreamController<int> streamController;
   late TextEditingController nameController;
+  Color randomColor = Colors.white;
+
   Timer? timer;
   int core = 0;
   int initNumber = 0;
@@ -28,11 +32,30 @@ class SequenceGameProvider with ChangeNotifier {
     nameController = TextEditingController();
   }
 
+  List<Color> colors = [
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.yellow,
+    Colors.orange,
+    Colors.purple,
+    Colors.pink,
+    Colors.cyan,
+    Colors.teal,
+    Colors.indigo,
+    Colors.brown,
+    Colors.grey,
+  ];
+
   void start(BuildContext context) {
     if (_isInitialized) return;
     final levelProvider = Provider.of<LevelProvider>(context, listen: false);
     total = levelProvider.totalNumbers;
     count = levelProvider.timeLimit;
+    colorList = List.generate(
+      total,
+      (_) => colors[Random().nextInt(colors.length)],
+    );
     initialTimeLimit = levelProvider.timeLimit;
     listNumber = List.generate(total, (index) => index + 1)..shuffle();
     initNumber = 0;
