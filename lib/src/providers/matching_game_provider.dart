@@ -16,9 +16,10 @@ class MatchingGameProvider with ChangeNotifier {
   late TextEditingController nameController;
   Timer? timer;
   int core = 0;
-  List<int> revealedItems = [];
-  List<int> matchedItems = [];
+  List<int> revealedIndices = []; // Lưu index của các ô được lật
+  List<int> matchedIndices = []; // Lưu index của các ô đã ghép
   bool _isInitialized = false;
+  bool isProcessing = false;
 
   bool get isInitialized => _isInitialized;
   Stream<int> get timeStream => streamController.stream;
@@ -51,8 +52,9 @@ class MatchingGameProvider with ChangeNotifier {
     streamController.close();
     streamController = StreamController<int>.broadcast();
     core = 0;
-    revealedItems.clear();
-    matchedItems.clear();
+    revealedIndices.clear();
+    matchedIndices.clear();
+    isProcessing = false; // Reset isProcessing
     notifyListeners();
     if (context != null) start(context);
   }
@@ -69,21 +71,30 @@ class MatchingGameProvider with ChangeNotifier {
   }
 
   void handleClick(int item, int index, BuildContext context) {
-    if (revealedItems.length < 2 && !matchedItems.contains(item)) {
-      revealedItems.add(item);
-      if (revealedItems.length == 2) {
-        if (revealedItems[0] == revealedItems[1]) {
-          matchedItems.addAll(revealedItems);
-          core += 20;
-          if (matchedItems.length == total) winGame(context);
-        }
-        Future.delayed(Duration(seconds: 1), () {
-          revealedItems.clear();
-          notifyListeners();
-        });
-      }
+    if (isProcessing ||
+        revealedIndices.length >= 2 ||
+        matchedIndices.contains(index)) {
+      return; // Ngăn xử lý khi đang bận hoặc ô đã ghép
     }
-    notifyListeners();
+
+    revealedIndices.add(index);
+    notifyListeners(); // Cập nhật giao diện ngay khi lật ô
+
+    if (revealedIndices.length == 2) {
+      isProcessing = true; // Khóa xử lý khi đã lật 2 ô
+      if (listNumber[revealedIndices[0]] == listNumber[revealedIndices[1]] &&
+          revealedIndices[0] != revealedIndices[1]) {
+        // Kiểm tra index khác nhau
+        matchedIndices.addAll(revealedIndices);
+        core += 20;
+        if (matchedIndices.length == total) winGame(context);
+      }
+      Future.delayed(Duration(seconds: 1), () {
+        revealedIndices.clear();
+        isProcessing = false; // Mở khóa sau khi hoàn tất
+        notifyListeners();
+      });
+    }
   }
 
   void endGame(BuildContext context) {

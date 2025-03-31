@@ -61,6 +61,8 @@ class MatchingGameWidget extends StatelessWidget {
       ),
       itemCount: listData.length,
       itemBuilder: (context, index) {
+        final isRevealed = provider.revealedIndices.contains(index);
+        final isMatched = provider.matchedIndices.contains(index);
         return AnimatedContainer(
           duration: Duration(milliseconds: 200),
           child: Material(
@@ -75,7 +77,8 @@ class MatchingGameWidget extends StatelessWidget {
                   context,
                   listen: false,
                 ).playButtonClickSound();
-                Provider.of<GameProvider>(
+                // Sửa: Gọi MatchingGameProvider thay vì GameProvider
+                Provider.of<MatchingGameProvider>(
                   context,
                   listen: false,
                 ).handleClick(listData[index], index, context);
@@ -83,19 +86,16 @@ class MatchingGameWidget extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color:
-                      provider.matchedItems.contains(listData[index])
+                      isMatched
                           ? Colors.green
-                          : provider.revealedItems.contains(listData[index])
+                          : isRevealed
                           ? Colors.blue
                           : Colors.grey,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Center(
                   child: Text(
-                    provider.matchedItems.contains(listData[index]) ||
-                            provider.revealedItems.contains(listData[index])
-                        ? listData[index].toString()
-                        : "?",
+                    isMatched || isRevealed ? listData[index].toString() : "?",
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
