@@ -5,7 +5,7 @@ import 'package:game_flutter/src/providers/auth_provider.dart';
 import 'game_mode_page.dart';
 import 'high_core_page.dart';
 import 'setting_page.dart';
-import '../game/level_page.dart';
+import 'level_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -71,25 +71,41 @@ class HomePage extends StatelessWidget {
                       _buildButton(
                         context: context,
                         title: 'Start Game',
-                        onPressed: () => Navigator.pushNamed(context, GameModePage.routeName),
+                        onPressed:
+                            () => Navigator.pushNamed(
+                              context,
+                              GameModePage.routeName,
+                            ),
                       ),
                       20.verticalSpace,
                       _buildButton(
                         context: context,
                         title: 'Levels',
-                        onPressed: () => Navigator.pushNamed(context, LevelPage.routeName),
+                        onPressed:
+                            () => Navigator.pushNamed(
+                              context,
+                              LevelPage.routeName,
+                            ),
                       ),
                       20.verticalSpace,
                       _buildButton(
                         context: context,
                         title: 'High Scores',
-                        onPressed: () => Navigator.pushNamed(context, HighScorePage.routeName),
+                        onPressed:
+                            () => Navigator.pushNamed(
+                              context,
+                              HighScorePage.routeName,
+                            ),
                       ),
                       20.verticalSpace,
                       _buildButton(
                         context: context,
                         title: 'Settings',
-                        onPressed: () => Navigator.pushNamed(context, SettingPage.routeName),
+                        onPressed:
+                            () => Navigator.pushNamed(
+                              context,
+                              SettingPage.routeName,
+                            ),
                       ),
                     ],
                   ),
@@ -121,10 +137,7 @@ class HomePage extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: TextStyle(
-          fontSize: 20.sp,
-          fontWeight: FontWeight.bold,
-        ),
+        style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
       ),
     );
   }

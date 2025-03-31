@@ -89,7 +89,6 @@ class AuthProvider with ChangeNotifier {
       );
       clearControllers();
       Navigator.pushReplacementNamed(context, LoginPage.routeName);
-
       return null; // Thành công thì trả về null
     } catch (e) {
       if (e is FirebaseAuthException) {
